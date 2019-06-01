@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Titoli di studio per partiti</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- These belongs to the HTML file where you want C3 to work - put these lines into your <head> tag -->
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>  
+</head>
+<body onload="init()">
+    <nav class="navbar navbar-default">
+      <ul class="nav navbar-nav">
+          <li><a id="0" href="#" onclick='showChart(0)'>Dottorato di ricerca</a></li>
+          <li><a id="1" href="#" onclick='showChart(1)'>Laurea</a></li>
+          <li><a id="2" href="#" onclick='showChart(2)'>Licenza elementare</a></li>
+          <li><a id="3" href="#" onclick='showChart(3)'>Licenza media inferiore</a></li>
+          <li><a id="4" href="#" onclick='showChart(4)'>Licenza media superiore</a></li>
+         
+      </ul>
+    </nav>
+  <h1 id="captionChart"></h1>  
+    <script> 
+      function init() {
+        var httpReq = new XMLHttpRequest();
+        httpReq.open("GET", "/datasetQuery3", false);
+        //httpReq.setRequestHeader("name", name);
+        httpReq.send();
+        if (httpReq.status == 200) {
+          localStorage.setItem("results", httpReq.response);
+        }
+        document.getElementById("captionChart").innerHTML = "Partiti a confronto su "+document.getElementById(0).textContent+"(In base ai titoli di studio delle amministrazioni comunali 2019) ";
+        showChart(0);
+      }
+      
+      function showChart(index) {
+        document.getElementById("captionChart").innerHTML = "Partiti a confronto su "+document.getElementById(0).textContent+"(In base ai titoli di studio delle amministrazioni comunali 2019) ";
+        var results = JSON.parse(localStorage.getItem("results"));
+        var iDiv = document.createElement('div');
+        iDiv.id = 'chart';
+        document.getElementsByTagName('body')[0].appendChild(iDiv);
+        console.log(results[index]);
+        console.log(results[index].LEGA);
+        console.log(results[index].PD);
+        console.log(results[index].FRATELLI_D)
+        console.log(results[index].FI)
+        console.log(results[index].M5S)
+        var chart = c3.generate({
+         data: {
+              columns: [
+                  ['LEGA', results[index].LEGA],
+                  ['PD', results[index].PD],
+                  ["F. D'ITALIA", results[index].FRATELLI_D],
+                  ['FORZA ITALIA', results[index].FI],
+                  ['M5S', results[index].M5S]
+              ],
+              type: 'donut', 
+              colors: {
+                "LEGA": '#008000',
+                "PD": '#FF0000',
+                "F. D'ITALIA": '#000080',
+                "FORZA ITALIA": '#0000FF',
+                "M5S": '#ffae1a'
+            }
+          },donut: {
+              title: results[index]._id
+          }
+        });
+        
+        chart.resize({height:800, width:800});          
+  }      
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Età media partiti</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- These belongs to the HTML file where you want C3 to work - put these lines into your <head> tag -->
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+
+<body style="padding: 0% 30% 30% 30%">
+  <h1>Età media delle amministrazioni per partito</h1>
+  <script>
+
+    var httpReq = new XMLHttpRequest();
+    httpReq.open("GET", "/datasetQuery4", false);
+    //httpReq.setRequestHeader("name", name);
+    httpReq.send();
+    if (httpReq.status == 200) {
+      var results = JSON.parse(httpReq.response);
+      var iDiv = document.createElement('div');
+      iDiv.id = 'chart';
+      document.getElementsByTagName('body')[0].appendChild(iDiv);
+      var chart = c3.generate({
+        data: {
+          columns: [
+            ['M5S', results[0].medium_age],
+            ["F. D'ITALIA", results[1].medium_age],
+            ["PD", results[2].medium_age],
+            ['LEGA', results[3].medium_age],
+            ['FORZA ITALIA', results[4].medium_age]
+          ],
+          type: 'bar',
+          colors: {
+            "LEGA": '#008000',
+            "PD": '#FF0000',
+            "F. D'ITALIA": '#000080',
+            "FORZA ITALIA": '#0000FF',
+            "M5S": '#ffae1a'
+          }
+        }
+      });
+
+      chart.resize({ height: 600, width: 800 });
+    }
+
+  </script>
+</body>
+
+</html>

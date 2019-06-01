@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Quote Rosa</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- These belongs to the HTML file where you want C3 to work - put these lines into your <head> tag -->
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+
+<body onload="init()">
+  <nav class="navbar navbar-default">
+    <ul class="nav navbar-nav">
+      <li><a id="0" href="#" onclick='showChart(0)'>Abbruzzo</a></li>
+      <li><a id="1" href="#" onclick='showChart(1)'>Basilicata</a></li>
+      <li><a id="2" href="#" onclick='showChart(2)'>Calabria</a></li>
+      <li><a id="3" href="#" onclick='showChart(3)'>Campania</a></li>
+      <li><a id="4" href="#" onclick='showChart(4)'>Emilia R.</a></li>
+      <li><a id="5" href="#" onclick='showChart(5)'>Friuli-V-G</a></li>
+      <li><a id="6" href="#" onclick='showChart(6)'>Lazio</a></li>
+      <li><a id="7" href="#" onclick='showChart(7)'>Liguria</a></li>
+      <li><a id="8" href="#" onclick='showChart(8)'>Lombardia</a></li>
+      <li><a id="9" href="#" onclick='showChart(9)'>Marche</a></li>
+      <li><a id="10" href="#" onclick='showChart(10)'>Molise</a></li>
+      <li><a id="11" href="#" onclick='showChart(11)'>Piemonte</a></li>
+      <li><a id="12" href="#" onclick='showChart(12)'>Puglia</a></li>
+      <li><a id="13" href="#" onclick='showChart(13)'>Sardegna</a></li>
+      <li><a id="14" href="#" onclick='showChart(14)'>Sicilia</a></li>
+      <li><a id="15" href="#" onclick='showChart(15)'>Toscana</a></li>
+      <li><a id="16" href="#" onclick='showChart(16)'>Trentino-A.</a></li>
+      <li><a id="17" href="#" onclick='showChart(17)'>Umbria</a></li>
+      <li><a id="18" href="#" onclick='showChart(18)'>Valle D.</a></li>
+      <li><a id="19" href="#" onclick='showChart(19)'>Veneto</a></li>
+    </ul>
+  </nav>
+  <h1 id="captionChart"></h1>
+  <script>
+    function init() {
+      var httpReq = new XMLHttpRequest();
+      httpReq.open("GET", "/datasetQuery1", false);
+      //httpReq.setRequestHeader("name", name);
+      httpReq.send();
+      if (httpReq.status == 200) {
+        localStorage.setItem("results", httpReq.response);
+      }
+      document.getElementById("captionChart").innerHTML = "Quote rosa nelle amministrazioni comunali in" + document.getElementById(0).textContent + " con carica di Sindaco (anno 2019)";
+      showChart(0);
+    }
+
+    function showChart(index) {
+      document.getElementById("captionChart").innerHTML = "Quantità di Uomo-Donna in " + document.getElementById(index).textContent + " con carica di Sindaco";
+      var results = JSON.parse(localStorage.getItem("results"));
+      var iDiv = document.createElement('div');
+      iDiv.id = 'chart';
+      document.getElementsByTagName('body')[0].appendChild(iDiv);
+      console.log(results);
+      var chart = c3.generate({
+        data: {
+          columns: [
+            ['Men', results[index].Men],
+            ['Women', results[index].Women]
+          ],
+          type: 'pie'
+        }
+      });
+
+      chart.resize({ height: 800, width: 800 });
+    }      
+  </script>
+</body>
+
+</html>
