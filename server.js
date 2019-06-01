@@ -13,11 +13,8 @@ app.use(express.static("public"));
 app.use(compression());
 
 app.get('/', function (req, res) {
+  //handleDataset.datasetHandler(MongoClient, urlDB);
   res.sendFile(path.join(__dirname + "/public/index.html"));
-});
-
-app.get('/handleDataset', function (req, res) {
-  handleDataset.datasetHandler(MongoClient, urlDB);
 });
 
 app.get('/datasetQuery1', function (req, res) {
