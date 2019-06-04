@@ -54,10 +54,7 @@ exports.groupGenderByRegion = function (MongoClient, urlDB) {
           }
         }, {
           '$group': {
-            '_id': '$codice_regione',
-            'sesso': {
-              '$push': '$sesso'
-            },
+            '_id': '$codice_regione', 
             'Men': {
               '$sum': {
                 '$cond': {
@@ -65,12 +62,12 @@ exports.groupGenderByRegion = function (MongoClient, urlDB) {
                     '$eq': [
                       '$sesso', 'M'
                     ]
-                  },
-                  'then': 1,
+                  }, 
+                  'then': 1, 
                   'else': 0
                 }
               }
-            },
+            }, 
             'Women': {
               '$sum': {
                 '$cond': {
@@ -78,17 +75,12 @@ exports.groupGenderByRegion = function (MongoClient, urlDB) {
                     '$eq': [
                       '$sesso', 'F'
                     ]
-                  },
-                  'then': 1,
+                  }, 
+                  'then': 1, 
                   'else': 0
                 }
               }
             }
-          }
-        }, {
-          '$project': {
-            'Men': 1,
-            'Women': 1
           }
         }, {
           '$sort': {
@@ -113,10 +105,7 @@ exports.groupTitlesByRegion = function (MongoClient, urlDB) {
           }
         }, {
           '$group': {
-            '_id': '$codice_regione',
-            'titoli_di_studio': {
-              '$push': '$titolo_studio'
-            },
+            '_id': '$codice_regione', 
             'LICENZA_ELEMENTARE': {
               '$sum': {
                 '$cond': {
@@ -124,12 +113,12 @@ exports.groupTitlesByRegion = function (MongoClient, urlDB) {
                     '$eq': [
                       '$titolo_studio', 'LICENZA ELEMENTARE'
                     ]
-                  },
-                  'then': 1,
+                  }, 
+                  'then': 1, 
                   'else': 0
                 }
               }
-            },
+            }, 
             'LICENZA_MEDIA_INF': {
               '$sum': {
                 '$cond': {
@@ -137,12 +126,12 @@ exports.groupTitlesByRegion = function (MongoClient, urlDB) {
                     '$eq': [
                       '$titolo_studio', 'LICENZA MEDIA INFERIORE'
                     ]
-                  },
-                  'then': 1,
+                  }, 
+                  'then': 1, 
                   'else': 0
                 }
               }
-            },
+            }, 
             'LICENZA_MEDIA_SUP': {
               '$sum': {
                 '$cond': {
@@ -150,12 +139,12 @@ exports.groupTitlesByRegion = function (MongoClient, urlDB) {
                     '$eq': [
                       '$titolo_studio', 'LICENZA MEDIA SUPERIORE'
                     ]
-                  },
-                  'then': 1,
+                  }, 
+                  'then': 1, 
                   'else': 0
                 }
               }
-            },
+            }, 
             'LAUREA': {
               '$sum': {
                 '$cond': {
@@ -163,12 +152,12 @@ exports.groupTitlesByRegion = function (MongoClient, urlDB) {
                     '$eq': [
                       '$titolo_studio', 'LAUREA'
                     ]
-                  },
-                  'then': 1,
+                  }, 
+                  'then': 1, 
                   'else': 0
                 }
               }
-            },
+            }, 
             'DOTTORATO': {
               '$sum': {
                 '$cond': {
@@ -176,20 +165,12 @@ exports.groupTitlesByRegion = function (MongoClient, urlDB) {
                     '$eq': [
                       '$titolo_studio', 'DOTTORATO DI RICERCA'
                     ]
-                  },
-                  'then': 1,
+                  }, 
+                  'then': 1, 
                   'else': 0
                 }
               }
             }
-          }
-        }, {
-          '$project': {
-            'LICENZA_ELEMENTARE': 1,
-            'LICENZA_MEDIA_INF': 1,
-            'LICENZA_MEDIA_SUP': 1,
-            'LAUREA': 1,
-            'DOTTORATO': 1
           }
         }, {
           '$sort': {
@@ -210,10 +191,7 @@ exports.groupParByRegion = function (MongoClient, urlDB) {
       dbo.collection("Ammcom").aggregate([
         {
           '$group': {
-            '_id': '$titolo_studio',
-            'titoli_di_studio': {
-              '$push': '$partito'
-            },
+            '_id': '$titolo_studio', 
             'LEGA': {
               '$sum': {
                 '$cond': {
@@ -249,12 +227,12 @@ exports.groupParByRegion = function (MongoClient, urlDB) {
                         ]
                       }
                     ]
-                  },
-                  'then': 1,
+                  }, 
+                  'then': 1, 
                   'else': 0
                 }
               }
-            },
+            }, 
             'PD': {
               '$sum': {
                 '$cond': {
@@ -290,12 +268,12 @@ exports.groupParByRegion = function (MongoClient, urlDB) {
                         ]
                       }
                     ]
-                  },
-                  'then': 1,
+                  }, 
+                  'then': 1, 
                   'else': 0
                 }
               }
-            },
+            }, 
             'FI': {
               '$sum': {
                 '$cond': {
@@ -331,12 +309,12 @@ exports.groupParByRegion = function (MongoClient, urlDB) {
                         ]
                       }
                     ]
-                  },
-                  'then': 1,
+                  }, 
+                  'then': 1, 
                   'else': 0
                 }
               }
-            },
+            }, 
             'FRATELLI_D': {
               '$sum': {
                 '$cond': {
@@ -372,12 +350,12 @@ exports.groupParByRegion = function (MongoClient, urlDB) {
                         ]
                       }
                     ]
-                  },
-                  'then': 1,
+                  }, 
+                  'then': 1, 
                   'else': 0
                 }
               }
-            },
+            }, 
             'M5S': {
               '$sum': {
                 '$cond': {
@@ -413,8 +391,8 @@ exports.groupParByRegion = function (MongoClient, urlDB) {
                         ]
                       }
                     ]
-                  },
-                  'then': 1,
+                  }, 
+                  'then': 1, 
                   'else': 0
                 }
               }
@@ -427,15 +405,6 @@ exports.groupParByRegion = function (MongoClient, urlDB) {
                 'LAUREA', 'DOTTORATO DI RICERCA', 'LICENZA ELEMENTARE', 'LICENZA MEDIA INFERIORE', 'LICENZA MEDIA SUPERIORE'
               ]
             }
-          }
-        }, {
-          '$project': {
-            '_id': 1,
-            'LEGA': 1,
-            'PD': 1,
-            'FI': 1,
-            'FRATELLI_D': 1,
-            'M5S': 1
           }
         }, {
           '$sort': {
@@ -457,9 +426,6 @@ exports.groupParByAvarageAge = function (MongoClient, urlDB) {
         {
           '$group': {
             '_id': '$partito', 
-            'age': {
-              '$push': '$età'
-            }, 
             'medium_age': {
               '$avg': '$età'
             }
@@ -482,11 +448,6 @@ exports.groupParByAvarageAge = function (MongoClient, urlDB) {
           }
         }, {
           '$sort': {
-            'medium_age': 1
-          }
-        }, {
-          '$project': {
-            '_id': 1, 
             'medium_age': 1
           }
         }
