@@ -13,7 +13,6 @@ app.use(express.static("public"));
 app.use(compression());
 
 app.get('/', function (req, res) {
-  //handleDataset.datasetHandler(MongoClient, urlDB);
   res.sendFile(path.join(__dirname + "/public/index.html"));
 });
 
@@ -43,4 +42,5 @@ app.get('/datasetQuery4', function (req, res) {
 });
 app.listen(8080, function () {
   console.log('App listening on port 8080!');
+  handleDataset.datasetHandler(MongoClient, urlDB);
 });
