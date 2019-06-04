@@ -30,7 +30,7 @@ exports.datasetHandler = function (MongoClient, urlDB) {
         });
         dbo.collection("Ammcom").createIndexes(
           [
-            { name: 'denominazione_comune', key: { denominazione_comune: 1 } },
+            { name: 'codice_regione', key: { denominazione_comune: 1 } },
             { name: 'partito', key: { partito: 1 } },
             { name: 'titolo_studio', key: { titolo_studio: 1 } }
           ],
