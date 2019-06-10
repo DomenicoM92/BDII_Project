@@ -457,6 +457,102 @@ exports.groupParByAvarageAge = function (MongoClient, urlDB) {
     });
   });
 }
+
+exports.groupStudyTitleByPar= function(MongoClient, urlDB){
+  return new Promise(function (fulfill, reject) {
+    MongoClient.connect(urlDB, { useNewUrlParser: true }, function (err, db) {
+      if (err) throw err;
+      var dbo = db.db("AmministrazioniComunali_DB");
+      dbo.collection("Ammcom").aggregate([
+  {
+    '$match': {
+      'partito': {
+        '$in': [
+          'FRATELLI D\'ITALIA', 'MOVIMENTO 5 STELLE', 'FORZA ITALIA', 'PARTITO DEMOCRATICO', 'LEGA'
+        ]
+      }
+    }
+  }, {
+    '$group': {
+      '_id': '$partito', 
+      'licenzaelementare': {
+        '$sum': {
+          '$cond': {
+            'if': {
+              '$eq': [
+                '$titolo_studio', 'LICENZA ELEMENTARE'
+              ]
+            }, 
+            'then': 1, 
+            'else': 0
+          }
+        }
+      }, 
+      'licenzamediainf': {
+        '$sum': {
+          '$cond': {
+            'if': {
+              '$eq': [
+                '$titolo_studio', 'LICENZA MEDIA INFERIORE'
+              ]
+            }, 
+            'then': 1, 
+            'else': 0
+          }
+        }
+      }, 
+      'licenzamediasup': {
+        '$sum': {
+          '$cond': {
+            'if': {
+              '$eq': [
+                '$titolo_studio', 'LICENZA MEDIA SUPERIORE'
+              ]
+            }, 
+            'then': 1, 
+            'else': 0
+          }
+        }
+      }, 
+      'laurea': {
+        '$sum': {
+          '$cond': {
+            'if': {
+              '$eq': [
+                '$titolo_studio', 'LAUREA'
+              ]
+            }, 
+            'then': 1, 
+            'else': 0
+          }
+        }
+      }, 
+      'dottorato': {
+        '$sum': {
+          '$cond': {
+            'if': {
+              '$eq': [
+                '$titolo_studio', 'DOTTORATO DI RICERCA'
+              ]
+            }, 
+            'then': 1, 
+            'else': 0
+          }
+        }
+      }
+    }
+  }, {
+    '$sort': {
+      '_id': 1
+    }
+  }
+]).toArray((err, results) => {
+        fulfill(results)
+      });
+    });
+  });
+}
+
 function JSONBuilder(data, index) {
 
   if (index == 2) {

@@ -40,6 +40,16 @@ app.get('/datasetQuery4', function (req, res) {
     res.send(results);
   })
 });
+
+app.get('/datasetQuery5', function (req, res) {
+  var groupStudyTitleByPar = handleDataset.groupStudyTitleByPar(MongoClient, urlDB);
+  groupStudyTitleByPar.then(function (results) {
+    res.send(results);
+  })
+});
+
+
+
 app.listen(8080, function () {
   console.log('App listening on port 8080!');
   //handleDataset.datasetHandler(MongoClient, urlDB);
