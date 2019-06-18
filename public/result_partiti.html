@@ -38,7 +38,7 @@
       }
       
       function showChart(index) {
-        document.getElementById("captionChart").innerHTML = "Partiti a confronto su "+document.getElementById(0).textContent+"(In base ai titoli di studio delle amministrazioni comunali 2019) ";
+        document.getElementById("captionChart").innerHTML = "Partiti a confronto su "+document.getElementById(index).textContent+"(In base ai titoli di studio delle amministrazioni comunali 2019) ";
         var results = JSON.parse(localStorage.getItem("results"));
         var iDiv = document.createElement('div');
         iDiv.id = 'chart';
