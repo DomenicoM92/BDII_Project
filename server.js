@@ -52,5 +52,5 @@ app.get('/datasetQuery5', function (req, res) {
 
 app.listen(8080, function () {
   console.log('App listening on port 8080!');
-  //handleDataset.datasetHandler(MongoClient, urlDB);
+  handleDataset.datasetHandler(MongoClient, urlDB);
 });

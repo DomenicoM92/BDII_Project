@@ -36,7 +36,7 @@ exports.datasetHandler = function (MongoClient, urlDB) {
           ],
           function (err, result) {
             //Error handling code
-            //console.log(err);
+            console.log(err);
           }
         );
       });
@@ -631,23 +631,17 @@ function standardizationTitleOfStudy(title) {
 }
 function getAge(dateString) {
   var now = new Date();
-  var today = new Date(now.getYear(), now.getMonth(), now.getDate());
-
   var yearNow = now.getYear();
   var monthNow = now.getMonth();
   var dateNow = now.getDate();
-
   var dob = new Date(dateString.substring(6, 10),
     dateString.substring(0, 2) - 1,
     dateString.substring(3, 5)
   );
-
   var yearDob = dob.getYear();
   var monthDob = dob.getMonth();
   var dateDob = dob.getDate();
   var age = {};
-  var ageString = "";
-
   yearAge = yearNow - yearDob;
 
   if (monthNow >= monthDob)
